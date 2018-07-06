@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>New Vault - <%= appInfo.brandname %></title>
+    <% include com/stdhead.html %>
+  </head>
+  <body>
+    <%- include('com/nav.html', {navClass: ''}) %>
+
+    <main>
+    <div class="container">
+      <form id="add-vault-form" action="/v2/vaults/add" method="POST" class="form card-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+          <h1 class="form-heading">Host a new vault</h1>
+          <div id="error-general" class="alert warning" role="alert"></div>
+          <% if (diskUsage >= diskQuota) { %>
+            <p class="form-desc">
+              <strong>You are out of disk space!</strong>
+              <a href="/account">Review your account</a> to manage your vaults.
+            </p>
+          <% } else { %>
+            <p class="form-desc bordered">
+              Paste the URL for your dPack vault below.
+            </p>
+
+            <p class="form-group">
+              <label for="add-vault-key-input">
+                URL
+              </label>
+              <div class="dpack-picker-container">
+                <input autofocus required type="text" class="form-control" id="add-vault-key-input" placeholder="dweb://" name="key" />
+                <span class="dpack-picker"><button class="btn">Browse</button></span>
+              </div>
+              <span id="add-vault-key-error" class="form-control-feedback"></span>
+            </p>
+
+            <p class="form-group">
+              <label for="add-vault-name-input">Name</label>
+              <input required type="text" class="form-control" id="add-vault-name-input"
+              placeholder="Optional" name="name">
+              <span id="add-vault-name-error" class="form-control-feedback"></span>
+              <p id="add-vault-name-output-container">
+                Your vault's URL:
+                <code>
+                  <span id="add-vault-name-output"></span>.<%= appInfo.hostname %>
+                </code></p>
+            </p>
+
+            <div class="actions">
+              <button id="add-vault-submit-btn" type="submit" class="btn success" disabled>
+                Deploy dWeb Vault
+              </button>
+            </div>
+          <% } %>
+      </form>
+
+      <div class="form-followup">
+        <div data-target="#beaker-howto">
+          <p>Create an vault with the dBrowser</p>
+          <i class="fa fa-caret-right"></i>
+          <div id="beaker-howto" class="content">
+            Install <a href="http://docs.dbrowser.io/install">dBrowser</a>, click "New dSite" in the dropdown menu to create an vault, then copy the vault's URL and paste it into the form above.
+          </div>
+        </div>
+        <div data-target="#dweb-howto">
+          <p>Create an vault via the command line</p>
+          <i class="fa fa-caret-right"></i>
+          <div id="dweb-howto" class="content">
+            Install the official <a href="http://docs.dpack.io/install"> dPack CLI</a>, create an vault, then paste the URL into the form above.
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </main>
+
+    <% include com/footer.html %>
+    <% include com/stdjs.html %>
+    <script>
+    window.params = {
+      username: "<%= sessionUser.username %>"
+    }
+    </script>
+    <% if (diskUsage < diskQuota) { %>
+      <script src="/assets/js/new-vault.js"></script>
+    <% } %>
+  </body>
+</html>

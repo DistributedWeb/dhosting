@@ -1,0 +1,83 @@
+@red: rgba(239, 71, 111, 1);
+@red--600: #EF476F;
+
+// pink
+@pink: #EF476F;
+@pink--700: #EF476F;
+@pink--accent-200: #EF476F;
+@pink--accent-400: #EF476F;
+
+@purple: #6D435A;
+@deep-purple: #6D435A;
+@indigo: #6D435A;
+
+// purple
+@purple: #1B9AAA;
+@purple--600: #1B9AAA;
+@purple--700: #1B9AAA;
+@purple--800: #1B9AAA;
+@purple--900: #1B9AAA;
+
+@purple--accent-400: rgba(38, 84, 124, 1);
+@purple--accent-700: rgba(38, 84, 124, 1);
+
+// light purple
+@light-purple: #1B9AAA;
+@light-purple--700: #1B9AAA;
+@light-purple--900: #1B9AAA;
+
+@cyan: #06D6A0;
+@teal: #06D6A0;
+
+@green: rgba(6, 214, 160, 1);
+@green--accent-400: #06D6A0;
+@green--accent-700: #06D6A0;
+
+@light-green: #06D6A0;
+@lime: #6D435A;
+@yellow: rgba(255, 209, 102, 1);
+@amber: #FFC43D;
+@orange: #FFC43D;
+@deep-orange: #FFC43D;
+@purple-grey: #F8FFE5;
+@white: hsla(30%, 100%, 99%, 1);
+
+@color-link: mix(@color-text, @purple--accent-400, 10%);
+
+// background colors
+@color-bg: mix(@purple--accent-700, fadeout(#000, 98%), 1%);
+@color-bg--white-transparent: fadeout(#fff, 75%);
+@color-bg--black-transparent: fadeout(#000, 95%);
+@color-bg--light-gray: tint(#000, 95%);
+@color-bg--lighter-gray: tint(#000, 97%);
+@color-bg--lightest-gray: tint(#000, 98%);
+@color-bg--card-form: tint(#000, 99%);
+@color-bg--hover: tint(#000, 95%);
+@color-bg--light-purple: tint(@purple, 95%);
+
+// border colors
+@color-border--transparent-btn: fadeout(#000, 90%);
+@color-border--input: fadeout(#000, 75%);
+@color-border--light-gray: tint(#000, 85%);
+@color-border--lighter-gray: tint(#000, 90%);
+@color-border--lightest-gray: fadeout(#000, 94%);
+@color-border--dark-gray: tint(#000, 50%);
+@color-border--gray: tint(#000, 75%);
+@color-border--light-purple: fadeout(@purple, 70%);
+
+// text colors
+@color-text: #111;
+@color-text--muted: tint(@color-text, 40%);
+@color-text--light: tint(@color-text, 65%);
+@color-text--white-transparent: fadeout(#fff, 1%);
+@color-text--form-warning: mix(@color-text, @pink, 25%);
+
+// media queries
+@tablet-vertical: 600px;
+@tablet-horizontal: 800px;
+@desktop: 950px;
+@desktop-wide: 1300px;
+
+// z-indexes
+@on-top: 3;
+@underneath: -3;

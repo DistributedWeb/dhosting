@@ -1,0 +1,95 @@
+.footer {
+  color: rgba(0,0,0,.85);
+  padding: 2rem 0;
+  font-size: .8rem;
+  border-top: 1px solid rgba(0,0,0,.1);
+
+  h2 {
+    margin-bottom: .5rem;
+    text-transform: uppercase;
+    font-size: inherit;
+    color: #06D6A0;
+  }
+
+  .dhosting-logo {
+    display: block;
+    margin-bottom: .5rem;
+  }
+
+  .about {
+
+    p {
+      margin-bottom: .5rem;
+      font-size: .8rem;
+      color: rgba(0,0,0,.75);
+    }
+
+    a {
+      &:extend(.link);
+      color: @color-link;
+    }
+  }
+
+  .about, .footer-links {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links {
+
+    ul {
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      margin-bottom: .25rem;
+    }
+
+    a {
+      color: @color-link;
+
+      &:hover {
+        &:extend(.link);
+      }
+    }
+  }
+
+  @media (min-width: @desktop) {
+    padding: 3em 0;
+
+    .about, .footer-links {
+      display: inline-block;
+      margin-bottom: 0;
+      vertical-align: top;
+      width: 48%;
+    }
+
+    .about {
+      margin-right: 1.5rem;
+    }
+
+    .footer-links {
+      display: inline-flex;
+      justify-content: flex-end;
+    }
+
+    .footer-links .dhosting,
+    .footer-links .external {
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 4rem;
+    }
+  }
+
+  &.light {
+    background: none;
+    color: @white;
+    font-weight: 400;
+    border-top: 0;
+
+    .container {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(0,0,0,.1);
+    }
+  }
+}

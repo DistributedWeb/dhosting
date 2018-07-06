@@ -1,0 +1,63 @@
+@import './base';
+
+.admin-dashboard {
+
+  h1 .admin-nav {
+    font-weight: normal;
+    font-size: 1.4rem;
+    margin-left: 0.5rem;
+
+    a {
+      color: @color-link;
+    }
+  }
+
+  #stats {
+    tbody td {
+      font-size: 3rem;
+      text-align: center;
+      width: 120px;
+    }
+  }
+
+  .record {
+    display: flex;
+
+    .record-content {
+      flex: 1;
+
+      textarea {
+        width: 100%;
+        max-width: 1000px;
+        overflow-x: auto;
+        font-family: monospace;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+
+    .record-actions {
+      flex: 0 0 400px;
+      margin-left: 1rem;
+    }
+  }
+
+  #status {
+    padding: 5px 10px;
+    font-weight: 700;
+    font-size: .85rem;
+    border-radius: 3px;
+    -webkit-font-smoothing: antialiased;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 1rem 0;
+
+    &.open {
+      background: shade(@red, 10%);
+    }
+
+    &.closed {
+      background: shade(@green, 10%);
+    }
+  }
+}

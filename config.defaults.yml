@@ -1,0 +1,59 @@
+dir: ./.dhosting
+brandname: dHosting
+hostname: dhosting.io
+proxy: true
+port: 80
+letsencrypt: false
+sites: per-vault
+rateLimiting: true
+csrf: true
+stripe:
+  secretKey: foo
+  publishableKey: bar
+
+defaultDiskUsageLimit: 100mb
+defaultNamedVaultsLimit: 15
+proDiskUsageLimit: 10gb
+proNamedVaultsLimit: 100
+
+# processing jobs
+jobs:
+  popularVaultsIndex: 30s
+  userDiskUsage: 5m
+  deleteDeadVaults: 5m
+
+# cache settings
+cache:
+  metadataStorage: 65536
+  contentStorage: 65536
+  tree: 65536
+
+# monitoring
+pm2: true
+alerts:
+  diskUsage: 1gb
+
+# user settings
+registration:
+  open: true
+  reservedNames:
+    - admin
+    - root
+    - support
+    - noreply
+    - users
+    - vaults
+admin:
+  email: 'jaredricelegal@gmail.com'
+  password: 'irhcLLC2020!'
+
+# email settings
+email:
+  transport: stub
+  sender: '"dHosting" <noreply@dhosting.local>'
+
+# login sessions
+sessions:
+  algorithm: HS256
+  secret: THIS MUST BE REPLACED!
+  expiresIn: 1h

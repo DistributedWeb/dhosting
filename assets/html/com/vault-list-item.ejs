@@ -1,0 +1,66 @@
+<% if (vault.owner) { %>
+  <li class="vault">
+    <span class="peer-count">
+      <i class="fa fa-share-alt"></i>
+      <%= vault.numPeers %><br>
+      <div>peers</div>
+    </span>
+
+    <div class="info">
+      <div class="vault-heading">
+        <a href="/<%= vault.owner.username %>/<%= vault.name || vault.key %>" class="title">
+          <% if (vault.manifest && vault.manifest.title) { %>
+            <%= vault.manifest.title %>
+          <% } else if (vault.name) { %>
+            <%= vault.name %>
+          <% } else { %>
+            <%= vault.key.slice(0, 6) + '..' + vault.key.slice(-2) %>
+          <% } %>
+        </a>
+        <span>by <a href="/<%= vault.owner.username %>"><%= vault.owner.username %></a></span>
+        <% if (vault.diskUsage) { %>
+          <span>(<%= vault.diskUsage %>)</span>
+        <% } %>
+      </div>
+
+      <% if (vault.manifest && vault.manifest.description) { %>
+        <p class="description">
+          <%= vault.manifest.description %>
+        </p>
+      <% } %>
+
+      <span class="time">
+        <% var date = nicedate(vault.createdAt) %>
+        <%= date %>
+        <% if (date !== 'yesterday' && date !== 'just now') { %>
+          <span> ago</span>
+        <% } %>
+      </span>
+
+      <div class="metadata">
+        <% if (vault.name) { %>
+          <code><%= vault.niceUrl %></code>
+          <a href="https://<%= vault.niceUrl %>">web</a> &bull;
+          <a href="dweb://<%= vault.niceUrl %>">p2p</a>
+        <% } else { %>
+          <a href="dweb://<%= vault.key %>">p2p</a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="vault-footer">
+      <span class="peer-count">
+        <i class="fa fa-share-alt"></i>
+        <%= vault.numPeers %> peers
+      </span>
+
+      <span class="time">
+        <% var date = nicedate(vault.createdAt) %>
+        <%= date %>
+        <% if (date !== 'yesterday' && date !== 'just now') { %>
+          <span> ago</span>
+        <% } %>
+      </span>
+    </div>
+  </li>
+<% } %>

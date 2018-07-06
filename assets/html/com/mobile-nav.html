@@ -1,0 +1,58 @@
+<div class="<%= navClass %> mobile-nav-links container">
+  <% if (sessionUser) { %>
+    <a href="/" class="dhosting-logo" title="dHosting">
+      <img height="25px" src="/assets/images/logo.png"/>
+    </a>
+  <% } %>
+  <button name="toggleMenu" class="btn mobile-nav-toggle">
+    <i class="fa fa-bars"></i>
+  </button>
+</div>
+<nav class="mobile-nav">
+  <ul class="links">
+    <% if (sessionUser) { %>
+      <li class="greeting nav-item">
+        <a href="/profile">Hi, <%= sessionUser.username %></a>
+        <button aria-label="Toggle menu" class="btn mobile-nav-toggle">
+          <i class="fa fa-close"></i>
+        </button>
+      </li>
+      <li class="nav-item">
+        <a href="/profile">View profile</a>
+      </li>
+      <li class="nav-item">
+        <a href="/account">Manage account</a>
+      </li>
+      <% if (sessionUser.plan === 'basic' && stripePK) { %>
+        <li class="nav-item">
+          <a href="/account/upgrade">
+            Upgrade to pro
+            <span class="pro-tag">pro</span>
+          </a>
+        </li>
+      <% } %>
+      <li class="nav-item">
+        <a href="/v2/accounts/logout">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a href="/new-vault">Upload vault</a>
+      </li>
+    <% } else { %>
+      <li class="nav-item greeting">
+        Welcome to dHosting!
+        <button class="btn mobile-nav-toggle">
+          <i class="fa fa-close"></i>
+        </button>
+      </li>
+      <li class="nav-item">
+        <a href="/about">About</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn primary register href="/register">Sign up</a>
+      </li>
+    <% } %>
+  </ul>
+</nav>

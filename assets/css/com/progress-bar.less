@@ -1,0 +1,25 @@
+.progress-bar-container {
+
+  .label {
+    display: block;
+    font-weight: 500;
+    font-size: .75rem;
+    margin-bottom: .25rem;
+  }
+}
+
+.progress-bar {
+  &:extend(.rounded);
+  position: relative;
+  width: 400px;
+  max-width: 100%;
+  height: 10px;
+  border: 1px solid  @color-border--dark-gray;
+  margin-bottom: 1rem;
+
+  .progress {
+    height: 100%;
+    background: @green--accent-700;
+    transition: width 0.2s;
+  }
+}

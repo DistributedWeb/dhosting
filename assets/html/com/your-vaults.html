@@ -1,0 +1,37 @@
+<div class="your-vaults">
+  <div class="heading">
+    <h2>Your vaults</h2>
+    <span class="usage">
+      <code><%= bytes(diskUsage) %>/<%= bytes(diskQuota) %></code>
+      <% if (diskUsage > diskQuota) { %>
+        <i class="fa fa-exclamation-circle"></i>
+      <% } %>
+    </span>
+  </div>
+
+  <% if (!sessionUser.vaults.length) { %>
+    <p class="no-vaults">
+      <em>No vaults</em>
+    </p>
+  <% } %>
+
+  <ul class="vaults">
+    <% userVaults.forEach(vault => { %>
+      <a class="item vault" href="/<%= sessionUser.username%>/<%= vault.name %>">
+        <span class="name">
+          <%= vault.title || vault.name %>
+        </span>
+        <code><%= bytes(vault.diskUsage) %></code>
+        <span class="peer-count">
+          <i class="fa fa-share-alt"></i>
+          <%= vault.numPeers %>
+        </span>
+      </a>
+    <% }) %>
+  </ul>
+  <% if (sessionUser.vaults.length > 10) { %>
+    <a class="more vault" href="/<%= sessionUser.username %>">
+      View <%= sessionUser.vaults.length - 10 %> more vaults...
+    </a>
+  <% } %>
+</div>

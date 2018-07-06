@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+.distributedhosting
+.dhosting
+config.*.yml
+!config.defaults.yml
+test/scaffold/testdpack1/.dpack

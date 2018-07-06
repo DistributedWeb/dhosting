@@ -1,0 +1,30 @@
+<ul class="activity-feed">
+  <% activity.forEach(event => { %>
+  <li class="event">
+    <a href="/<%= event.username %>" class="username">
+      <%= event.username %>
+    </a>
+
+    <% if (event.action === 'add-vault') { %>
+      <span>added</span>
+    <% } else if (event.action === 'update-vault') { %>
+      <span>updated</span>
+    <% } else if (event.action === 'del-vault') { %>
+      <span>removed</span>
+    <% } %>
+
+    <% var name = event.params.name || (event.params.key.slice(0, 6) + '..' + event.params.key.slice(-2)) %>
+    <a href="/<%= event.username %>/<%= event.params.key %>" class="vault-name">
+      <%= name %>
+    </a>
+
+    <span class="time">
+      <% var date = nicedate(event.ts) %>
+      <%= date %>
+      <% if (date !== 'yesterday' && date !== 'just now') { %>
+        <span> ago</span>
+      <% } %>
+    </span>
+  <% }) %>
+  </li>
+</ul>

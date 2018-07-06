@@ -1,0 +1,153 @@
+@import './base';
+@import '../com/card';
+@import '../com/forms';
+@import '../forms/vault-settings';
+
+main.vault {
+
+  .vault-content {
+    &:extend(.card);
+    margin: 1rem 0;
+    padding-bottom: 2.5rem !important;
+    position: relative;
+  }
+
+  #admin-remove-vault-form,
+  #remove-vault-form {
+    display: none;
+
+    &.open {
+      display: block;
+    }
+  }
+
+  h1 .featured {
+    display: inline-block;
+    background: @color-bg--light-gray;
+    border: 1px solid @color-border--light-gray;
+    font-size: 11.5px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 3px 5px 2px 5px;
+    line-height: 100%;
+    vertical-align: middle;
+    font-weight: 500;
+    letter-spacing: .35px;
+    color: fadeout(@color-text, 20%);
+
+    i {
+      margin-right: 2px;
+    }
+  }
+
+  .untitled {
+    font-weight: 500;
+    margin-right: 5px;
+  }
+
+  .links {
+    &:extend(.flex);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 0 !important;
+    width: 100%;
+    font-size: .8rem;
+    height: 40px;
+    border-top: 1px solid @color-border--light-gray;
+
+    > i {
+      display: none;
+
+      @media (min-width: @tablet-vertical) {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 40px;
+        width: 40px;
+        height: 100%;
+        text-align: center;
+        color: @color-text--muted;
+        font-size: 16px;
+        background: #fff;
+        border-right: 1px solid @color-border--light-gray;
+      }
+    }
+
+    .url {
+      position: relative;
+      display: inline-block;
+      flex: 1;
+      text-align: center;
+      line-height: 40px;
+      text-decoration: none;
+
+      code {
+        margin-right: 15px;
+
+        @media (min-width: @tablet-vertical) {
+          margin-right: 0;
+        }
+      }
+
+      &:not(:last-of-type) {
+        border-right: 1px solid @color-border--light-gray;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:hover {
+        background: @color-bg--light-gray;
+      }
+
+      .copy-to-clipboard {
+        color: @color-text--light;
+        text-decoration: none !important;
+        position: absolute;
+        right: .5rem;
+        top: 15px;
+        margin-left: auto;
+
+        &:hover {
+          color: @color-text;
+        }
+      }
+    }
+  }
+
+  .progress-bar {
+    margin: 0;
+    width: 100%;
+  }
+
+  .admin-controls {
+    margin-top: 1rem;
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: .5rem;
+    }
+
+    > div:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+
+    form {
+      margin-top: .5rem;
+    }
+  }
+
+  .owner-controls {
+    margin-bottom: 1em;
+  }
+}
+
+.vault-footer-links {
+  font-size: .8rem;
+
+  > button,
+  > a {
+    color: @color-text--muted;
+  }
+}

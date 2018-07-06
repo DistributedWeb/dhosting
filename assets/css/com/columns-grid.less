@@ -1,0 +1,13 @@
+.columns-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1.25rem;
+
+  @media (min-width: @tablet-vertical) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: @desktop) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}

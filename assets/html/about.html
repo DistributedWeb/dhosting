@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>About - <%= appInfo.brandname %></title>
+    <% include com/stdhead.html %>
+    <link rel="stylesheet" href="/assets/css/about.css">
+  </head>
+  <body>
+    <%- include('com/nav.html', {navClass: ''}) %>
+
+    <main class="about">
+    <div class="container large">
+      <h1>About dHosting</h1>
+
+      <div id="overview" class="section overview">
+        <p>
+          dHosting is a public peer for files published with the
+          <a href="https://dwebs.io">dWeb protocol</a>.
+          We keep your files online while your computer is off.
+        </p>
+
+        <p>
+          <a href="https://dpack.io">dPack</a> is a peer-to-peer
+          repository for sharing datasets and files. When you use dPack, your files
+          are distributed across the network of peers who you've shared your
+          files with.
+        </p>
+
+      </div>
+
+      <div class="card section">
+        <h3>Why use dHosting? Reliability and peer revelation!</h3>
+
+        <p>
+          Publishing with dPack means that peers
+          will contribute bandwidth, but only if they're online and sharing
+          your files. If nobody's hosting your files, then they
+          won't be accessible.
+        </p>
+
+        <p>
+          That's where dHosting comes in. We act as a "super peer" that makes
+          sure your content is always available.
+        </p>
+
+        <% if (stripePK) { %>
+        <p>
+          <a href="/pricing">Get started</a>
+        </p>
+        <% } %>
+      </div>
+
+      <div class="section features">
+        <% include com/features.html %>
+      </div>
+
+      <!-- <div class="section team">
+      <h2 id="team">Team</h2>
+      <div class="member">
+        <img src="/assets/images/jared.jpg" />
+        <h3 class="title">Jared Rice Sr.</h3>
+        <div class="links">
+          <a href="https://twitter.com/jricesr">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a href="https://github.com/jaredricesr">
+            <i class="fa fa-github"></i>
+          </a>
+          <a href="https://jaredricesr.io">
+            <i class="fa fa-link"></i>
+          </a>
+        </div>
+      </div>
+      <div class="member">
+        <img src="/assets/images/stan.jpg" />
+        <h3 class="title">Stan Larimer</h3>
+        <div class="links">
+          <a href="https://twitter.com/stanlarimer">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a href="https://github.com/cryptonomex">
+            <i class="fa fa-github"></i>
+          </a>
+          <a href="https://steemit.com/stan">
+            <i class="fa fa-link"></i>
+          </a>
+        </div>
+      </div>
+      <div class="member">
+        <img src="/assets/images/stan.jpg" />
+        <h3 class="title">Michael Taggart</h3>
+        <div class="links">
+          <a href="https://twitter.com/michaelx">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a href="https://github.com/murderistic">
+            <i class="fa fa-github"></i>
+          </a>
+          <a href="https://steemit.com/michaelx">
+            <i class="fa fa-link"></i>
+          </a>
+        </div>
+      </div> -->
+
+      <p class="dweb">
+        We also partnered closely with the <a href="https://distributedwebs.org">
+        Distributed Webs Project, LLC.</a>. dHosting would not be possible without their hard
+        work and innovation.
+      </p>
+    </div>
+    </div>
+
+    </main>
+    <% include com/footer.html %>
+    <% include com/stdjs.html %>
+  </body>
+</html>

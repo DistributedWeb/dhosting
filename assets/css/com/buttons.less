@@ -1,0 +1,141 @@
+button.btn {
+  line-height: 100%;
+  vertical-align: middle;
+}
+
+.btn {
+  &:extend(.rounded);
+  display: inline-flex;
+  align-items: center;
+  outline: none;
+  border: none;
+  border: 1px solid transparent;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 200;
+  text-shadow: none;
+  font-size: .9rem;
+  height: 25px;
+  text-decoration: none !important;
+  background: @color-bg;
+  border: 1px solid @color-border--light-gray;
+
+  i {
+    margin-left: 5px;
+  }
+
+  &:hover {
+    background: shade(@color-bg, 5%);
+  }
+
+  &.small {
+    padding: 0 20px;
+    height: 40px;
+  }
+
+  &.big {
+    font-size: 2.3rem;
+    padding: 0.7em 1em;
+    height: auto;
+  }
+
+  &.primary {
+    &:extend(.antialiased);
+    font-weight: 300;
+    color: #FFFCF9;
+    background: @purple--accent-700;
+    border-color: @purple--accent-700;
+    background: @purple--accent-400;
+    border-color: @purple--accent-400;
+
+    i {
+      font-weight: 300;
+    }
+
+    &:active,
+    &:hover {
+      background: shade(@purple--accent-700, 7%);
+    }
+  }
+
+  &.success {
+    &:extend(.antialiased);
+    font-weight: 300;
+    letter-spacing: .01rem;
+    color: @color-text--white-transparent;
+    background: @green--accent-700;
+    border: 1px solid @green--accent-700;
+
+    i {
+      font-weight: 700;
+    }
+    &:hover {
+      background: shade(@green--accent-700, 5%);
+    }
+  }
+
+  &.cancel {
+    &:extend(.antialiased);
+    font-weight: 300;
+    letter-spacing: .01rem;
+    color: @color-text--white-transparent;
+    background: @red;
+    border: 1px solid @red;
+
+    i {
+      font-weight: 700;
+    }
+
+    &:hover {
+      background: shade(@red, 5%);
+    }
+  }
+
+  &.transparent {
+    background: none;
+    border: 1px solid @color-border--light-gray;
+
+    &:hover {
+      background: tint(@color-border--light-gray, 75%);
+    }
+  }
+
+  &.opaque {
+    background: fadeout(#000, 95%);
+  }
+
+  &.outline,
+  &.outline:hover {
+    color: inherit;
+    background: none;
+    border: 1px solid;
+    font-weight: 300;
+  }
+
+  &.white {
+    background: #fff;
+    color: @color-link;
+  }
+
+  &[disabled] {
+    color: fadeout(@color-text, 50%);
+    background: none;
+    border: 1px solid @color-border--light-gray;
+    cursor: default;
+
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+.upload {
+
+  i {
+    font-size: 10px;
+    -webkit-text-stroke: .5px transparent;
+    position: relative;
+    top: -1px;
+  }
+}

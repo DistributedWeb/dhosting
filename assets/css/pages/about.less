@@ -1,0 +1,60 @@
+@import './base';
+
+main.about {
+
+  h1 {
+    font-size: 3.0rem;
+  }
+
+  .section.card {
+    max-width: 640px;
+
+    h3 {
+      margin-top: 0.5rem;
+    }
+    p {
+      max-width: none;
+    }
+    a {
+      color: @color-link;
+    }
+  }
+
+  .section.team .member {
+    display: inline-block;
+    text-align: center;
+    margin-right: 3rem;
+
+    img {
+      &:extend(.rounded);
+      width: 125px;
+      height: 125px;
+    }
+
+    .title {
+      margin: .5rem 0;
+    }
+
+    .links {
+      &:extend(.flex);
+      &:extend(.rounded);
+      border: 1px solid;
+      justify-content: space-between;
+      margin: auto;
+      font-size: 1rem;
+
+      a {
+        flex: 1;
+
+        &:hover {
+          background: @color-text;
+          color: #fff;
+        }
+
+        &:not(:last-child) {
+          border-right: 1px solid;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Support - <%= appInfo.brandname %></title>
+    <% include com/stdhead.html %>
+    <link rel="stylesheet" href="/assets/css/support.css">
+  </head>
+  <body>
+    <%- include('com/nav.html', {navClass: ''}) %>
+
+    <main class="support">
+    <div class="container medium">
+      <h1>Support</h1>
+
+      <div class="card">
+        Contact us at <a href="mailto:support@dwebs.io">support@dwebs.io</a> if your question is not answered here.
+      </div>
+
+      <h2>FAQ</h2>
+
+      <h3>What is a dPack vault?</h3>
+      <p>
+        A dPack vault is a collection of files that can be efficiently distributed
+        to other peers on the dWeb network.
+      </p>
+
+      <h3 id="create-dpack-vault">How do I create a dPack vault?</h3>
+      <p>
+        You can use the <a href="https://dbrowser.io/download/">
+        dBrowser</a>, the <a href="https://dpack.io/downloads/cli">
+        official dPack command line CLI</a>, or the <a href="https://dwebs.io/downloads/dftp">
+        dWeb's dFTP desktop app</a>.
+      </p>
+
+      <h3 id="self-hosting">
+        Can I self host dHosting?
+      </h3>
+      <p>
+        Yes. The software that powers dHosting, <a href="https://github.com/dhosting/dhost">
+        dHost</a>, is open source and easy to deploy.
+      </p>
+      <p>
+        You may also find
+        <a href="https://github.com/dpacks/http">dPack HTTP</a>
+        is a good choice.
+      </p>
+    </div>
+    </main>
+
+    <% include com/footer.html %>
+    <% include com/stdjs.html %>
+  </body>
+</html>

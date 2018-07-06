@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= appInfo.brandname %></title>
+    <% include com/stdhead.html %>
+    <link rel="stylesheet" href="/assets/css/home.css">
+  </head>
+  <body>
+    <main class="home">
+      <% if (session) { %>
+        <%- include('com/nav.html', {navClass: ''}) %>
+      <% } else { %>
+        <%- include('com/nav.html', {navClass: 'fp-not-logged-in'}) %>
+      <% } %>
+
+      <% if (!session) { %>
+        <% include hero.html %>
+      <% } else { %>
+        <% include com/dashboard.html %>
+      <% } %>
+
+      <% if (verified) { %>
+        <p id="verified-alert" class="alert success" role="alert">
+          Your email is verified and your account is now active
+        </p>
+      <% } %>
+      </div>
+
+      <div class="section p2p-apps">
+        <div class="container big">
+          <h1>
+            <i class="fa fa-cloud"></i>
+            Featured dSites & dApps
+          </h1>
+
+          <div class="p2p-apps-list">
+            <a href="https://dbuilder.io" class="app paste-dweb">
+              <h3 class="title">dBuilder</h3>
+              <p class="desc">
+                Drag-and-drop dSite builder for the dWeb.
+              </p>
+              <i class="fa fa-drive"></i>
+            </a>
+
+            <a href="https://dpacks.io" class="app rss">
+              <h3 class="title">dPacks</h3>
+              <p class="desc">
+                Decentralized and distributed dApp and dSite repository.
+              </p>
+              <i class="fa fa-drive"></i>
+            </a>
+
+            <a href="https://dstatus.io" class="app photo-album">
+              <h3 class="title">dStatus</h3>
+              <p class="desc">
+                Decentralized social network for the distributed web!
+              </p>
+              <i class="fa fa-drive"></i>
+            </a>
+          </div>
+<br><br>
+          <div class="p2p-apps-list">
+            <a href="https://dbrowser.io/meteor" class="app rss">
+              <h3 class="title">MeteorIDE</h3>
+              <p class="desc">
+                Distributed code editor for the distributed web.
+              </p>
+              <i class="fa fa-drive"></i>
+            </a>
+            <a href="https://dpress.io" class="app photo-album">
+              <h3 class="title">dPress</h3>
+              <p class="desc">
+                The Wordpress&trade; of the distributed web! Easily build distributed blogs!
+              </p>
+              <i class="fa fa-drive"></i>
+            </a>
+
+            <a href="https://dwebs.io" class="app paste-dweb">
+              <h3 class="title">dWebs.io Website</h3>
+              <p class="desc">
+                Official website for the dWeb protocol.
+              </p>
+              <i class="fa fa-drive"></i>
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="section featured-apps">
+        <div class="container big">
+          <h1>
+            <i class="fa fa-heart"></i>
+            From the community
+          </h1>
+
+          <!-- <div class="featured-apps-list">
+            <% featured.forEach(vault => { %>
+
+              <% if (vault.manifest && (vault.manifest.title || vault.name)) { %>
+                <a href="/<%= vault.owner.username %>/<%= vault.name %>" class="app">
+                  <div class="vault-header">
+                    <h3 class="title" title="<%= vault.name %>">
+                      <span><%= vault.name %></span>
+                    </h3>
+
+                    <span class="author">by <%= vault.owner.username %></span>
+                  </div>
+
+                  <p class="desc">
+                    <% if (vault.manifest.description) { %>
+                      <%= vault.manifest.description %>
+                    <% } else { %>
+                      <em>No description</em>
+                    <% } %>
+                  </p>
+                </a>
+              <% } %>
+            <% }) %>
+          </div> -->
+        </div>
+
+          <!-- <% if (session && sessionUser) { %>
+            <% if (sessionUser.vaults.length) { %>
+              <% include com/your-vaults.html %>
+            <% } else { %>
+              <div id="get-started-container">
+                <i id="dismiss-get-started-btn" class="fa fa-close"></i>
+                <p>
+                  Welcome! Get started by <a href="/new-vault">adding your first vault</a>.
+                </p>
+                <div class="graphic-container">
+                  <i class="main fa fa-magic"></i>
+                </div>
+              </div>
+            <% } %>
+
+            <p id="dbrowser-prompt-frontpage" class="dbrowser-prompt frontpage hidden">
+              <i id="dismiss-dbrowser-prompt-btn" class="fa fa-close"></i>
+              Use dHosting in the Beaker browser <a href="https://beakerbrowser.com">Learn more</a>
+              <i class="fa fa-cubes"></i>
+            </p>
+          <% } %>
+        -->
+
+        </div> -->
+      </div>
+    </main>
+    <% include com/footer-light.html %>
+    <% include com/stdjs.html %>
+    <script src="/assets/js/frontpage.js"></script>
+  </body>
+</html>

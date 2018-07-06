@@ -1,0 +1,66 @@
+<div id="dashboard">
+  <div class="container big">
+
+    <div class="stats">
+      <div class="stat">
+        <span class="value"><%= bytes(diskUsage)%></span>
+        <span class="label">hosted</span>
+      </div>
+
+      <div class="stat">
+        <span class="value"><%= peerCount %></span>
+        <span class="label">peers</span>
+      </div>
+
+      <a class="stat" href="/profile">
+        <% if (sessionUser.vaults) { %>
+          <span class="value"><%= sessionUser.vaults.length %></span>
+        <% } else { %>
+          <span class="value">0</span>
+        <% } %>
+        <span class="label">vaults</span>
+      </a>
+    </div>
+
+    <div class="tools">
+      <div class="vaults-container">
+        <div class="header">
+          <h1>Hi, <a href="/profile"><%= sessionUser.username %></a></h1>
+
+          <p><a href="/account">Account settings <i class="fa fa-gear"></i></a></p>
+        </div>
+
+        <div class="your-vaults">
+          <% if (!sessionUser.vaults.length) { %>
+            <p class="no-vaults">
+              <em>No vaults</em>
+            </p>
+          <% } %>
+
+          <ul class="vaults">
+            <% userVaults.slice(0, 5).forEach(vault => { %>
+              <a class="item vault" href="/<%= sessionUser.username%>/<%= vault.name %>">
+                <span class="name">
+                  <%= vault.title || vault.name %>
+                </span>
+                <span class="peer-count">
+                  <%= vault.numPeers %> peers
+                </span>
+              </a>
+            <% }) %>
+
+            <a href="/new-vault" class="item btn primary">
+              Upload vault +
+            </a>
+          </ul>
+        </div>
+      </div>
+
+      <% if (sessionUser.vaults.length > 5) { %>
+        <a class="more" href="/<%= sessionUser.username%>">
+          <%= sessionUser.vaults.length - 5 %> more vaults...
+        </a>
+      <% } %>
+    </div>
+  </div>
+</div>

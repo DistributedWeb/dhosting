@@ -1,0 +1,31 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 7px;
+
+  &.large {
+    max-width: 1000px;
+  }
+
+  &.big {
+    max-width: 1050px;
+  }
+
+  &.medium {
+    max-width: 700px;
+  }
+
+  &.small {
+    // TODO: use this instead of manually setting .card-form width -tbv
+    max-width: 400px;
+  }
+
+  @media (min-width: @tablet-vertical) {
+    padding: 0 15px;
+  }
+
+  @media (min-width: @tablet-horizontal) {
+    padding: 0 25px;
+  }
+}

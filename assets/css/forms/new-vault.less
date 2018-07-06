@@ -1,0 +1,73 @@
+#add-vault-form {
+
+  + .form-followup {
+
+    div[data-target] {
+      &:extend(.flex);
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      padding: .75rem 0;
+      border-bottom: 1px solid @color-border--light-gray;
+
+      &:first-of-type {
+        padding-top: 0;
+      }
+
+      &:last-of-type {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      &:hover {
+
+        p {
+          cursor: pointer;
+          color: @color-link;
+        }
+      }
+    }
+
+    .content {
+      display: none;
+      padding: .75rem 0;
+
+      &.visible {
+        display: block;
+        flex-basis: 100%;
+      }
+
+      iframe {
+        max-width: 366px;
+        height: 205px;
+      }
+    }
+  }
+
+  .dpack-picker-container {
+    position: relative;
+
+    .dpack-picker {
+      display: none;
+      position: absolute;
+      z-index: 1;
+      right: 4px;
+      top: 4px;
+
+      .btn {
+        height: 26px;
+        font-weight: 400;
+      }
+    }
+
+    &.enabled {
+      .dpack-picker {
+        display: inline;
+      }
+
+      input {
+        padding-right: 80px;
+      }
+    }
+  }
+}

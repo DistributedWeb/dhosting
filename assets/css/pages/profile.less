@@ -1,0 +1,116 @@
+@import "./base";
+
+main.profile {
+  padding: 1rem 0;
+
+  .content-container {
+    &:extend(.flex);
+  }
+
+  .content {
+    &:extend(.card);
+  }
+
+  .content,
+  .sidebar {
+    margin-bottom: 2rem;
+    flex-basis: 100%;
+  }
+
+  @media (min-width: @tablet-horizontal) {
+
+    .content {
+      flex: 2;
+    }
+
+    .sidebar {
+      flex: 1;
+      margin-left: 2rem;
+    }
+
+  }
+
+  .breadcrumbs {
+    vertical-align: middle;
+  }
+
+  .breadcrumbs + .btn.new-vault {
+    display: inline-block;
+    margin-left: 1rem;
+  }
+
+  .vaults .heading {
+    margin: .25rem .75rem;
+
+    * {
+      display: inline-block;
+    }
+
+    h2 {
+      text-transform: uppercase;
+      font-size: .75rem;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .btn.new-vault {
+      float: right;
+    }
+  }
+
+  .sidebar {
+
+    > * {
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    .send-email {
+      font-size: .9rem;
+    }
+
+    .activity {
+      font-size: .85rem;
+
+      h2 {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        text-transform: uppercase;
+        font-size: .8rem;
+        font-weight: 400;
+        margin-bottom: .5rem;
+        margin-top: 0;
+        border-bottom: 1px solid @color-border--light-gray;
+      }
+    }
+  }
+
+  /* TODO this is so hackish and should be removed when we have a more clear
+   * conception of how to display lists of vaults to users -tbv
+   */
+  .vault-footer {
+    border-bottom: 0;
+  }
+
+  @media (min-width: @tablet-horizontal) {
+    .content {
+      display: flex;
+    }
+
+    .vaults {
+      flex: 2;
+      padding-right: 4rem;
+    }
+
+    .sidebar {
+      display: block;
+      flex: 1;
+
+      h2 {
+        margin-top: 0;
+      }
+    }
+  }
+}

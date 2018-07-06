@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= userRecord.username %> - <%= appInfo.brandname %></title>
+    <% include com/stdhead.html %>
+    <link rel="stylesheet" href="/assets/css/profile.css">
+  </head>
+  <body>
+    <%- include('com/nav.html', {navClass: ''}) %>
+
+    <main class="profile">
+
+    <div class="container">
+      <p id="general-feeback" class="alert primary"></p>
+      <h1 class="breadcrumbs">
+        <a href="/<%= userRecord.username %>"><%= userRecord.username %></a>
+      </h1>
+    </div>
+    <div class="container">
+      <div class="content-container">
+
+        <div class="content">
+          <% if (vaults.length) { %>
+            <div class="vaults">
+              <div class="heading">
+                <% if (session && session.id === userRecord.id) { %>
+                  <h2>Your vaults</h2>
+                <% } else { %>
+                  <h2><%= userRecord.username %>'s vaults</h2>
+                <% } %>
+              </div>
+
+              <ul class="vault-list">
+                <% vaults.forEach(vault => { %>
+                  <%- include('com/vault-list-item', {vault: vault}) %>
+                <% }) %>
+              </ul>
+            </div>
+          <% } else { %>
+            <p class="vaults">
+              <em>No vaults</em>
+            </p>
+          <% } %>
+        </div>
+
+        <div class="sidebar">
+          <div class="activity">
+            <h2 class="heading">Recent activity</h2>
+            <% if (activity.length) { %>
+              <%- include('com/activity.html', {activity}) %>
+            <% } else { %>
+              <em>No recent activity</em>
+            <% } %>
+          </div>
+
+          <% if (sessionUser && sessionUser.scopes.includes('admin:users')) { %>
+            <div class="admin-controls card">
+              <h2>admin</h2>
+              <div class="send-email">
+                <h3 class="heading">Send this user a message</h2>
+                <p id="send-email-success" class="alert success"></p>
+                <p id="send-email-error" class="alert error"></p>
+                <p>
+                  (Only include the message and the subject. The greeting and salutation are already included).
+                </p>
+                <form id="send-email" class="form" method="POST">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="hidden" name="username" value="<%= userRecord.username %>"/>
+
+                  <p class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" name="subject" placeholder="Subject"/>
+                  </p>
+
+                  <p>
+                    <label for="message">Your message</label>
+                    <textarea name="message"></textarea>
+                  </p>
+
+                  <button type="submit" class="btn primary">Send</button>
+                </form>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    </main>
+
+    <% include com/footer.html %>
+    <% include com/stdjs.html %>
+    <% if (sessionUser && sessionUser.scopes.includes('admin:users')) { %>
+      <script src="/assets/js/user-admin.js"></script>
+    <% } %>
+  </body>
+</html>

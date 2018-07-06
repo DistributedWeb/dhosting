@@ -1,0 +1,138 @@
+.form {
+  font-size: .9rem;
+}
+
+.form.card-form,
+.form + .form-followup {
+  &:extend(.card);
+  max-width: 400px;
+  margin: 1rem auto;
+  padding: 1rem;
+  border: 1px solid @color-border--light-gray;
+}
+
+.modal-form-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: fadeout(#000, 60%);
+  z-index: 10;
+
+  &.visible {
+    display: block;
+  }
+}
+
+.form.modal-form {
+  &:extend(.card);
+  margin: auto;
+  margin-top: 50px;
+  max-width: 400px;
+}
+
+input,
+textarea {
+  &:extend(.rounded);
+  outline: none;
+  border: 1px solid @color-border--input;
+  width: 100%;
+  padding: .5rem;
+  font-size: .85rem;
+
+  &:focus {
+    outline: none;
+    border: 1px solid fadeout(@purple--accent-400, 5%);
+  }
+}
+
+input[type="radio"] {
+  display: inline-block;
+  width: 20px;
+}
+
+.form-heading {
+  margin-bottom: 1rem;
+}
+
+.form-desc {
+
+  a {
+    &:extend(.link);
+  }
+}
+
+.form-desc,
+.form-help {
+  margin-bottom: 1.5rem;
+}
+
+.form-footer {
+  font-size: .85rem;
+  color: @color-text--muted;
+  padding: 1rem;
+  margin: 1rem -1rem -1rem -1rem;
+  background: shade(@color-bg--card-form, 2%);
+  border-top: 1px solid @color-border--light-gray;
+
+  a {
+    color: @color-link;
+    &:extend(.link);
+  }
+}
+
+.form-desc.bordered {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid @color-border--light-gray;
+}
+
+.form label {
+  font-weight: 500;
+  margin-bottom: .5rem;
+}
+
+.form-group {
+  margin: 1rem 0;
+
+  &.warning {
+
+    input,
+    textarea {
+      border: 1px solid @color-text--form-warning;
+    }
+
+    .form-control-feedback {
+      color: @color-text--form-warning;
+    }
+  }
+}
+
+.form-control-feedback {
+  font-size: .8rem;
+}
+
+.form .actions {
+  &:extend(.flex);
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: .5rem;
+
+  div {
+    margin-left: auto;
+  }
+
+  button[type="submit"],
+  .submit {
+    margin-left: auto;
+  }
+
+  .alternate-link {
+    color: @color-link;
+  }
+}
+
+.form + .form-followup a {
+  color: @color-link;
+}
