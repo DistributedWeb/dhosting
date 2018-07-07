@@ -56,7 +56,7 @@ Schema:
 
   forgotPasswordNonce: String, the random verification nonce (forgot password flow)
 
-  isProfileDatVerified: Boolean
+  isProfileDPackVerified: Boolean
   profileVerifyToken: String, the profile verification token (stored so the user can refetch it)
 }
 ```

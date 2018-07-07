@@ -14,10 +14,10 @@ $(function () {
   toggleables.forEach(function (el) {
     el.addEventListener('click', toggleHowto)
   })
-  setupDatPicker()
+  setupDPackPicker()
   addVaultNameOutputContainer[0].style.opacity = '0'
 
-  function setupDatPicker () {
+  function setupDPackPicker () {
     if (!('DPackVault' in window)) {
       return
     }
