@@ -22,7 +22,7 @@
     "@dbrowser/internal-tracker": "*",
     "@ddrive/core": "~0.1.9",
     "@dhosting/logger": "~0.1.2",
-    "@dpack/api": "~0.1.6",
+    "@dpack/api": "*",
     "@dwebs/codec": "~0.1.3",
     "@flockcore/presets": "~0.1.6",
     "@flockcore/server": "~0.1.7",
@@ -80,7 +80,7 @@
     "vhost": "^3.0.2"
   },
   "devDependencies": {
-    "@dpack/core": "~0.1.4",
+    "@dpack/core": "~0.1.5",
     "@dpack/pin": "~0.1.3",
     "ava": "^0.17.0",
     "memdb": "^1.3.1",
