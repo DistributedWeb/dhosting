@@ -5,7 +5,7 @@ var { makeDPackFromFolder } = require('./lib/dweb.js')
 
 var app
 var sessionToken, auth, authUser
-var testDat, testDPackKey
+var testDPack, testDPackKey
 
 test.cb('start test server', t => {
   createTestServer(async (err, _app) => {
@@ -72,7 +72,7 @@ test('register and login bob', async t => {
 test.cb('share test-dpack 1', t => {
   makeDPackFromFolder(path.join(__dirname, '/scaffold/testdpack1'), (err, d, dkey) => {
     t.ifError(err)
-    testDat = d
+    testDPack = d
     testDPackKey = dkey
     t.end()
   })
@@ -140,7 +140,7 @@ test('add vault now fails', async t => {
 
 test.cb('stop test server', t => {
   app.close(() => {
-    testDat.close(() => {
+    testDPack.close(() => {
       t.pass('closed')
       t.end()
     })
@@ -253,7 +253,7 @@ test('enforce name vaults limit', async t => {
 
 test.cb('stop test server', t => {
   app.close(() => {
-    testDat.close(() => {
+    testDPack.close(() => {
       t.pass('closed')
       t.end()
     })
