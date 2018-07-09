@@ -50,7 +50,7 @@ admin:
 # email settings
 email:
   transport: stub
-  sender: '"dHosting" <noreply@dhosting.local>'
+  sender: '"dHosting" <noreply@dhosting.io>'
 
 # login sessions
 sessions:

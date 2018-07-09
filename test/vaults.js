@@ -164,31 +164,6 @@ test('user disk usage is now non-zero', async t => {
   t.truthy(res.body.diskUsage > 0, 'disk usage is greater than zero')
 })
 
-// TEMPORARY - hypercloud only allows one hosting user per vault
-// test('add duplicate vault as another user', async t => {
-//   var json = {key: testDPackKey}
-//   var res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
-//   t.is(res.statusCode, 200, '200 added dPack')
-
-//   res = await app.req.get({url: '/v2/users/bob?view=vaults', json: true, auth: authUser})
-//   t.is(res.statusCode, 200, '200 got user data')
-//   t.deepEqual(res.body.vaults[0], {
-//     key: testDPackKey,
-//     name: null,
-//     title: 'Test dPack 1',
-//     description: 'The first test dPack'
-//   })
-
-//   res = await app.req.get({url: '/v2/users/bob/' + testDPackKey, json: true, auth: authUser})
-//   t.is(res.statusCode, 200, '200 got dPack data')
-//   t.deepEqual(res.body, {
-//     user: 'bob',
-//     key: testDPackKey,
-//     name: null,
-//     title: 'Test dPack 1',
-//     description: 'The first test dPack'
-//   })
-// })
 test('dont allow duplicate vaults as another user', async t => {
   var json = {key: testDPackKey}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
@@ -414,18 +389,6 @@ test('remove vault', async t => {
   var res = await app.req.post({uri: '/v2/vaults/remove', json, auth})
   t.is(res.statusCode, 200, '200 removed dPack')
 })
-
-// TEMPORARY only 1 owner per vault allowed
-// test('check vault status after removed by one user, not all', async t => {
-//   var res = await app.req({uri: `/v2/vaults/item/${testDPackKey}`, qs: {view: 'status'}, auth})
-//   t.is(res.statusCode, 200, '200 got dPack')
-// })
-
-// test('remove vault as other user', async t => {
-//   var json = {key: testDPackKey}
-//   var res = await app.req.post({uri: '/v2/vaults/remove', json, auth: authUser})
-//   t.is(res.statusCode, 200, '200 removed dPack')
-// })
 
 test('remove vault that was already removed', async t => {
   var json = {key: testDPackKey}

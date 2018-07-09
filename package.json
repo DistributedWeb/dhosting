@@ -22,7 +22,7 @@
     "@dbrowser/internal-tracker": "*",
     "@ddrive/core": "~0.1.9",
     "@dhosting/logger": "~0.1.2",
-    "@dpack/api": "*",
+    "@dpack/api": "~0.1.7",
     "@dwebs/codec": "~0.1.3",
     "@flockcore/presets": "~0.1.6",
     "@flockcore/server": "~0.1.7",

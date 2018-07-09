@@ -1,6 +1,6 @@
 /* global $ DPackVault */
 
-var DPACK_KEY_REGEX = /([0-9a-f]{64})/i
+var DWEB_KEY_REGEX = /([0-9a-f]{64})/i
 
 $(function () {
   var addVaultForm = $('#add-vault-form')
@@ -50,7 +50,7 @@ $(function () {
 
   function getKeyVal () {
     var keyValRaw = addVaultKeyInput.val()
-    var keyMatch = DPACK_KEY_REGEX.exec(keyValRaw)
+    var keyMatch = DWEB_KEY_REGEX.exec(keyValRaw)
     return (keyMatch) ? keyMatch[1] : false
   }
 

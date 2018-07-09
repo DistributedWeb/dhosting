@@ -12,7 +12,7 @@ exports.makeDPackFromFolder = function (dir, cb) {
       dpack.joinNetwork()
 
       var key = dpack.key.toString('hex')
-      console.log('created dPack', key, 'from', dir)
+      console.log('created dpack', key, 'from', dir)
       cb(null, dpack, key)
     })
   })

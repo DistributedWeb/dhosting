@@ -148,7 +148,7 @@ In the [default configuration](./config.defaults.yml#L46-L49) we use the [`stub`
 # email settings
 email:
   transport: stub
-  sender: '"dHosting" <noreply@dhosting.local>'
+  sender: '"dHosting" <noreply@dhosting.io>'
 ```
 
 `dhosting` has a dependency on the [`ses`](https://www.npmjs.com/package/nodemailer-ses-transport) and [`smtp`](https://www.npmjs.com/package/nodemailer-smtp-transport) transport, which means you can use those out-of-the-box. For other transports you need to install those first.
