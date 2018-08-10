@@ -1,4 +1,4 @@
-/* global $ DPackVault */
+/* global $ DWebVault */
 
 var DWEB_KEY_REGEX = /([0-9a-f]{64})/i
 
@@ -14,21 +14,21 @@ $(function () {
   toggleables.forEach(function (el) {
     el.addEventListener('click', toggleHowto)
   })
-  setupDPackPicker()
+  setupDWebPicker()
   addVaultNameOutputContainer[0].style.opacity = '0'
 
-  function setupDPackPicker () {
-    if (!('DPackVault' in window)) {
+  function setupDWebPicker () {
+    if (!('DWebVault' in window)) {
       return
     }
 
-    var dPackPicker = $('.dpack-picker')
-    dPackPicker.parent().addClass('enabled')
-    dPackPicker.click(onPickDPack)
+    var dWebPicker = $('.dweb-picker')
+    dWebPicker.parent().addClass('enabled')
+    dWebPicker.click(onPickDWeb)
   }
 
-  function onPickDPack () {
-    DPackVault.selectVault().then(vault => {
+  function onPickDWeb () {
+    DWebVault.selectVault().then(vault => {
       addVaultKeyInput.val(vault.url)
     })
   }

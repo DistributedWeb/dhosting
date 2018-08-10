@@ -1,11 +1,11 @@
 var path = require('path')
 var test = require('ava')
 var createTestServer = require('./lib/server.js')
-var { makeDPackFromFolder } = require('./lib/dweb.js')
+var { makeDWebFromFolder } = require('./lib/dweb.js')
 
 var app
 var sessionToken, auth
-var testDPackKey
+var testDWebKey
 
 test.cb('start test server', t => {
   createTestServer(async (err, _app) => {
@@ -28,18 +28,18 @@ test.cb('start test server', t => {
   })
 })
 
-test.cb('share test-dpack', t => {
-  makeDPackFromFolder(path.join(__dirname, '/scaffold/testdpack1'), (err, d, dkey) => {
+test.cb('share test-dweb', t => {
+  makeDWebFromFolder(path.join(__dirname, '/scaffold/testdweb1'), (err, d, dkey) => {
     t.ifError(err)
-    testDPackKey = dkey
+    testDWebKey = dkey
     t.end()
   })
 })
 
 test('add vault', async t => {
-  var json = {key: testDPackKey, name: 'my-dpack'}
+  var json = {key: testDWebKey, name: 'my-dweb'}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 })
 
 test.cb('check vault status and wait till synced', t => {
@@ -49,7 +49,7 @@ test.cb('check vault status and wait till synced', t => {
 
   checkStatus()
   async function checkStatus () {
-    var res = await app.req({uri: `/v2/vaults/item/${testDPackKey}`, qs: {view: 'status'}, json: true, auth})
+    var res = await app.req({uri: `/v2/vaults/item/${testDWebKey}`, qs: {view: 'status'}, json: true, auth})
     var progress = res.body && res.body.progress ? res.body.progress : 0
     if (progress === 1) {
       clearTimeout(to)
@@ -63,13 +63,13 @@ test.cb('check vault status and wait till synced', t => {
 })
 
 test('add vault to featured', async t => {
-  var res = await app.req.post({uri: `/v2/admin/vaults/${testDPackKey}/feature`, auth})
-  t.is(res.statusCode, 200, '200 added dPack to featured')
+  var res = await app.req.post({uri: `/v2/admin/vaults/${testDWebKey}/feature`, auth})
+  t.is(res.statusCode, 200, '200 added dWeb to featured')
 })
 
 test('get populated featured', async t => {
   var res = await app.req.get({uri: '/v2/explore?view=featured', json: true})
-  t.is(res.statusCode, 200, '200 got featured dpacks')
+  t.is(res.statusCode, 200, '200 got featured dwebs')
   t.is(res.body.featured.length, 1, 'got 1 vault')
   for (var i = 0; i < 1; i++) {
     let vault = res.body.featured[i]
@@ -84,13 +84,13 @@ test('get populated featured', async t => {
 })
 
 test('remove vault from featured', async t => {
-  var res = await app.req.post({uri: `/v2/admin/vaults/${testDPackKey}/unfeature`, auth})
-  t.is(res.statusCode, 200, '200 removed dPack from featured')
+  var res = await app.req.post({uri: `/v2/admin/vaults/${testDWebKey}/unfeature`, auth})
+  t.is(res.statusCode, 200, '200 removed dWeb from featured')
 })
 
 test('get unpopulated featured', async t => {
   var res = await app.req.get({uri: '/v2/explore?view=featured', json: true})
-  t.is(res.statusCode, 200, '200 got featured dpacks')
+  t.is(res.statusCode, 200, '200 got featured dwebs')
   t.is(res.body.featured.length, 0, 'got 0 vaults')
 })
 

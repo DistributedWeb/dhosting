@@ -94,7 +94,7 @@ module.exports = async function (config) {
     httpGatewayApp.engine('html', ejs.renderFile)
     httpGatewayApp.set('view engine', 'html')
     httpGatewayApp.set('views', path.join(__dirname, 'assets/html'))
-    httpGatewayApp.get('/.well-known/dpack', dhost.api.vaultFiles.getDNSFile)
+    httpGatewayApp.get('/.well-known/dweb', dhost.api.vaultFiles.getDNSFile)
     httpGatewayApp.get('*', dhost.api.vaultFiles.getFile)
     httpGatewayApp.use((err, req, res, next) => {
       if (err) {

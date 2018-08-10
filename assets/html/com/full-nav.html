@@ -15,7 +15,7 @@
             <span>Hi, <%= sessionUser.username %></span>
             <i class="fa fa-caret-down"></i>
             <div class="dropdown-menu">
-              <% if (sessionUser.scopes.includes('admin:dpacks')) { %>
+              <% if (sessionUser.scopes.includes('admin:dwebs')) { %>
                 <a class="dropdown-item" href="/v2/admin">Admin Dashboard</a>
                 <hr>
               <% } %>

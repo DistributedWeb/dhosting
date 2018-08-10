@@ -3,11 +3,11 @@ var path = require('path')
 var fs = require('fs')
 var promisify = require('es6-promisify')
 var createTestServer = require('./lib/server.js')
-var { makeDPackFromFolder, downloadDPackFromFlock } = require('./lib/dweb.js')
+var { makeDWebFromFolder, downloadDWebFromFlock } = require('./lib/dweb.js')
 
 var app
 var sessionToken, auth, authUser
-var testDPack, testDPackKey
+var testDWeb, testDWebKey
 var fsstat = promisify(fs.stat, fs)
 
 test.cb('start test server', t => {
@@ -72,11 +72,11 @@ test('register and login bob', async t => {
   authUser = { bearer: sessionToken }
 })
 
-test.cb('share test-dpack', t => {
-  makeDPackFromFolder(path.join(__dirname, '/scaffold/testdpack1'), (err, d, dkey) => {
+test.cb('share test-dweb', t => {
+  makeDWebFromFolder(path.join(__dirname, '/scaffold/testdweb1'), (err, d, dkey) => {
     t.ifError(err)
-    testDPack = d
-    testDPackKey = dkey
+    testDWeb = d
+    testDWebKey = dkey
     t.end()
   })
 })
@@ -88,9 +88,9 @@ test('user disk usage is zero', async t => {
 })
 
 test('add vault', async t => {
-  var json = {key: testDPackKey}
+  var json = {key: testDWebKey}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 })
 
 test.cb('check vault status and wait till synced', t => {
@@ -100,7 +100,7 @@ test.cb('check vault status and wait till synced', t => {
 
   checkStatus()
   async function checkStatus () {
-    var res = await app.req({uri: `/v2/vaults/item/${testDPackKey}`, qs: {view: 'status'}, json: true, auth})
+    var res = await app.req({uri: `/v2/vaults/item/${testDWebKey}`, qs: {view: 'status'}, json: true, auth})
     var progress = res.body && res.body.progress ? res.body.progress : 0
     if (progress === 1) {
       clearTimeout(to)
@@ -117,39 +117,39 @@ test('read back vault', async t => {
   var res = await app.req.get({url: '/v2/users/admin?view=vaults', json: true, auth})
   t.is(res.statusCode, 200, '200 got user data')
   t.deepEqual(res.body.vaults[0], {
-    key: testDPackKey,
+    key: testDWebKey,
     name: null,
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
-  res = await app.req.get({url: '/v2/users/admin/' + testDPackKey, json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data')
+  res = await app.req.get({url: '/v2/users/admin/' + testDWebKey, json: true, auth})
+  t.is(res.statusCode, 200, '200 got dWeb data')
   t.deepEqual(res.body, {
     user: 'admin',
-    key: testDPackKey,
+    key: testDWebKey,
     name: null,
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
-  res = await app.req.get({url: '/v2/vaults/item/' + testDPackKey, json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data')
+  res = await app.req.get({url: '/v2/vaults/item/' + testDWebKey, json: true, auth})
+  t.is(res.statusCode, 200, '200 got dWeb data')
   t.deepEqual(res.body, {
-    url: `dweb://${testDPackKey}`,
+    url: `dweb://${testDWebKey}`,
     name: null,
-    title: 'Test dPack 1',
-    description: 'The first test dPack',
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb',
     additionalUrls: []
   })
 
   res = await app.req.get({url: '/v2/vaults', json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data')
+  t.is(res.statusCode, 200, '200 got dWeb data')
   t.deepEqual(res.body.items[0], {
-    url: `dweb://${testDPackKey}`,
+    url: `dweb://${testDWebKey}`,
     name: null,
-    title: 'Test dPack 1',
-    description: 'The first test dPack',
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb',
     additionalUrls: []
   })
 })
@@ -165,128 +165,128 @@ test('user disk usage is now non-zero', async t => {
 })
 
 test('dont allow duplicate vaults as another user', async t => {
-  var json = {key: testDPackKey}
+  var json = {key: testDWebKey}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
   t.is(res.statusCode, 422, '422 rejected')
 })
 
 test('add vault that was already added', async t => {
-  var json = {key: testDPackKey}
+  var json = {key: testDWebKey}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   res = await app.req.get({url: '/v2/users/admin?view=vaults', json: true, auth})
   t.is(res.statusCode, 200, '200 got user data')
   t.deepEqual(res.body.vaults[0], {
-    key: testDPackKey,
+    key: testDWebKey,
     name: null,
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
-  res = await app.req.get({url: '/v2/users/admin/' + testDPackKey, json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data')
+  res = await app.req.get({url: '/v2/users/admin/' + testDWebKey, json: true, auth})
+  t.is(res.statusCode, 200, '200 got dWeb data')
   t.deepEqual(res.body, {
     user: 'admin',
-    key: testDPackKey,
+    key: testDWebKey,
     name: null,
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 })
 
 test('change vault name', async t => {
   // change name the first time
-  var json = {key: testDPackKey, name: 'test-vault'}
+  var json = {key: testDWebKey, name: 'test-vault'}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   res = await app.req.get({url: '/v2/users/admin?view=vaults', json: true, auth})
   t.is(res.statusCode, 200, '200 got user data')
   t.deepEqual(res.body.vaults[0], {
-    key: testDPackKey,
+    key: testDWebKey,
     name: 'test-vault',
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
   res = await app.req.get({url: '/v2/users/admin/test-vault', json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data by name')
+  t.is(res.statusCode, 200, '200 got dWeb data by name')
   t.deepEqual(res.body, {
     user: 'admin',
-    key: testDPackKey,
+    key: testDWebKey,
     name: 'test-vault',
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
-  res = await app.req.get({url: '/v2/users/admin/' + testDPackKey, json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data by key')
+  res = await app.req.get({url: '/v2/users/admin/' + testDWebKey, json: true, auth})
+  t.is(res.statusCode, 200, '200 got dWeb data by key')
   t.deepEqual(res.body, {
     user: 'admin',
-    key: testDPackKey,
+    key: testDWebKey,
     name: 'test-vault',
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
-  res = await app.req.get({url: '/v2/vaults/item/' + testDPackKey, json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data')
+  res = await app.req.get({url: '/v2/vaults/item/' + testDWebKey, json: true, auth})
+  t.is(res.statusCode, 200, '200 got dWeb data')
   t.deepEqual(res.body, {
-    url: `dweb://${testDPackKey}`,
+    url: `dweb://${testDWebKey}`,
     name: 'test-vault',
-    title: 'Test dPack 1',
-    description: 'The first test dPack',
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb',
     additionalUrls: ['dweb://test-vault.test.local', 'https://test-vault.test.local']
   })
 
   res = await app.req.get({url: '/v2/vaults', json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data')
+  t.is(res.statusCode, 200, '200 got dWeb data')
   t.deepEqual(res.body.items[0], {
-    url: `dweb://${testDPackKey}`,
+    url: `dweb://${testDWebKey}`,
     name: 'test-vault',
-    title: 'Test dPack 1',
-    description: 'The first test dPack',
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb',
     additionalUrls: ['dweb://test-vault.test.local', 'https://test-vault.test.local']
   })
 
   // change to invalid names
-  json = {key: testDPackKey, name: 'invalid$name'}
+  json = {key: testDWebKey, name: 'invalid$name'}
   res = await app.req.post({uri: '/v2/vaults/add', json, auth})
   t.is(res.statusCode, 422, '422 invalid name')
 
   // change name the second time
-  json = {key: testDPackKey, name: 'test--dpack'}
+  json = {key: testDWebKey, name: 'test--dweb'}
   res = await app.req.post({uri: '/v2/vaults/add', json, auth})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   res = await app.req.get({url: '/v2/users/admin?view=vaults', json: true, auth})
   t.is(res.statusCode, 200, '200 got user data')
   t.deepEqual(res.body.vaults[0], {
-    key: testDPackKey,
-    name: 'test--dpack',
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    key: testDWebKey,
+    name: 'test--dweb',
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
-  res = await app.req.get({url: '/v2/users/admin/test--dpack', json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data by name')
+  res = await app.req.get({url: '/v2/users/admin/test--dweb', json: true, auth})
+  t.is(res.statusCode, 200, '200 got dWeb data by name')
   t.deepEqual(res.body, {
     user: 'admin',
-    key: testDPackKey,
-    name: 'test--dpack',
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    key: testDWebKey,
+    name: 'test--dweb',
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
-  res = await app.req.get({url: '/v2/users/admin/' + testDPackKey, json: true, auth})
-  t.is(res.statusCode, 200, '200 got dPack data by key')
+  res = await app.req.get({url: '/v2/users/admin/' + testDWebKey, json: true, auth})
+  t.is(res.statusCode, 200, '200 got dWeb data by key')
   t.deepEqual(res.body, {
     user: 'admin',
-    key: testDPackKey,
-    name: 'test--dpack',
-    title: 'Test dPack 1',
-    description: 'The first test dPack'
+    key: testDWebKey,
+    name: 'test--dweb',
+    title: 'Test dWeb 1',
+    description: 'The first test dWeb'
   })
 
   res = await app.req.get({url: '/v2/users/admin/test-vault', json: true, auth})
@@ -300,7 +300,7 @@ test('dont allow two vaults with same name', async t => {
   // add vault
   var json = {key, name: 'test-duplicate-vault'}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   // add the vault again (no change)
   res = await app.req.post({uri: '/v2/vaults/add', json, auth})
@@ -322,7 +322,7 @@ test('dont allow two vaults with same name', async t => {
   t.is(res.statusCode, 200, '200 can rename to self')
 
   // rename to existing (fail)
-  json = {name: 'test--dpack'}
+  json = {name: 'test--dweb'}
   res = await app.req.post({uri: '/v2/vaults/item/' + key, json, auth})
   t.is(res.statusCode, 422, '422 name already in use')
 
@@ -337,13 +337,13 @@ test('dont allow two vaults with same name', async t => {
   t.is(res.statusCode, 200, '200 removed')
 })
 
-test.cb('vault is accessable via dPack flock', t => {
-  console.log('closing origin testdpack flock')
-  testDPack.close(() => {
+test.cb('vault is accessable via dWeb flock', t => {
+  console.log('closing origin testdweb flock')
+  testDWeb.close(() => {
     console.log('downloading from server flock')
-    downloadDPackFromFlock(testDPackKey, { timeout: 15e3 }, (err, receivedDPack) => {
+    downloadDWebFromFlock(testDWebKey, { timeout: 15e3 }, (err, receivedDWeb) => {
       t.ifError(err)
-      t.is(testDPack.vault.content.blocks, receivedDPack.vault.content.blocks, 'got all content blocks')
+      t.is(testDWeb.vault.content.blocks, receivedDWeb.vault.content.blocks, 'got all content blocks')
       t.end()
     })
   })
@@ -385,42 +385,42 @@ test('list vaults by recency', async t => {
 })
 
 test('remove vault', async t => {
-  var json = {key: testDPackKey}
+  var json = {key: testDWebKey}
   var res = await app.req.post({uri: '/v2/vaults/remove', json, auth})
-  t.is(res.statusCode, 200, '200 removed dPack')
+  t.is(res.statusCode, 200, '200 removed dWeb')
 })
 
 test('remove vault that was already removed', async t => {
-  var json = {key: testDPackKey}
+  var json = {key: testDWebKey}
   var res = await app.req.post({uri: '/v2/vaults/remove', json, auth})
-  t.is(res.statusCode, 200, '200 removed dPack')
+  t.is(res.statusCode, 200, '200 removed dWeb')
 })
 
 test('check vault status after removed', async t => {
-  var res = await app.req({uri: `/v2/vaults/item/${testDPackKey}`, qs: {view: 'status'}, auth})
+  var res = await app.req({uri: `/v2/vaults/item/${testDWebKey}`, qs: {view: 'status'}, auth})
   t.is(res.statusCode, 404, '404 not found')
 
   res = await app.req.get({url: '/v2/users/admin?view=vaults', json: true, auth})
   t.is(res.statusCode, 200, '200 got user data')
   t.is(res.body.vaults.length, 0)
 
-  res = await app.req.get({url: '/v2/users/admin/' + testDPackKey, json: true, auth})
+  res = await app.req.get({url: '/v2/users/admin/' + testDWebKey, json: true, auth})
   t.is(res.statusCode, 404, '404 not found')
 
-  res = await app.req.get({url: '/v2/users/admin/testdpack', json: true, auth})
+  res = await app.req.get({url: '/v2/users/admin/testdweb', json: true, auth})
   t.is(res.statusCode, 404, '404 not found')
 })
 
 test('delete dead vaults job', async t => {
   // folder exists
-  var stat = await fsstat(app.dhost.vaultr._getVaultFilesPath(testDPackKey))
+  var stat = await fsstat(app.dhost.vaultr._getVaultFilesPath(testDWebKey))
   t.truthy(stat)
 
   // run job
   await app.dhost.vaultr.deleteDeadVaults()
 
   // folder does not exist
-  await t.throws(fsstat(app.dhost.vaultr._getVaultFilesPath(testDPackKey)))
+  await t.throws(fsstat(app.dhost.vaultr._getVaultFilesPath(testDWebKey)))
 })
 
 test('vault status wont stall on vault that fails to sync', async t => {
@@ -437,7 +437,7 @@ test('vault status wont stall on vault that fails to sync', async t => {
 
 test.cb('stop test server', t => {
   app.close(() => {
-    testDPack.close(() => {
+    testDWeb.close(() => {
       t.pass('closed')
       t.end()
     })

@@ -4,48 +4,48 @@ const DPack = require('@dpack/core')
 const util = require('./util')
 
 exports.makeDPackFromFolder = function (dir, cb) {
-  rimraf.sync(path.join(dir, '.dpack'))
-  DPack(dir, (err, dpack) => {
+  rimraf.sync(path.join(dir, '.dweb'))
+  DPack(dir, (err, dweb) => {
     if (err) return cb(err)
 
-    dpack.importFiles(() => {
-      dpack.joinNetwork()
+    dweb.importFiles(() => {
+      dweb.joinNetwork()
 
-      var key = dpack.key.toString('hex')
-      console.log('created dpack', key, 'from', dir)
-      cb(null, dpack, key)
+      var key = dweb.key.toString('hex')
+      console.log('created dweb', key, 'from', dir)
+      cb(null, dweb, key)
     })
   })
 }
 
 exports.downloadDPackFromFlock = function (key, { timeout = 5e3 }, cb) {
   var dir = util.mktmpdir()
-  DPack(dir, {key}, (err, dpack) => {
+  DPack(dir, {key}, (err, dweb) => {
     if (err) return cb(err)
 
-    dpack.joinNetwork()
-    dpack.network.once('connection', (...args) => {
+    dweb.joinNetwork()
+    dweb.network.once('connection', (...args) => {
       console.log('got connection')
     })
 
-    dpack.vault.metadata.on('download', (index, block) => {
+    dweb.vault.metadata.on('download', (index, block) => {
       console.log('meta download event', index)
     })
 
     var to = setTimeout(() => cb(new Error('timed out waiting for download')), timeout)
-    dpack.vault.metadata.on('sync', () => {
+    dweb.vault.metadata.on('sync', () => {
       console.log('meta download finished')
     })
-    dpack.vault.once('content', () => {
+    dweb.vault.once('content', () => {
       console.log('opened')
-      dpack.vault.content.on('download', (index, block) => {
+      dweb.vault.content.on('download', (index, block) => {
         console.log('content download event', index)
       })
-      dpack.vault.content.on('sync', () => {
+      dweb.vault.content.on('sync', () => {
         console.log('content download finished')
         clearTimeout(to)
-        dpack.close()
-        cb(null, dpack, key)
+        dweb.close()
+        cb(null, dweb, key)
       })
     })
   })

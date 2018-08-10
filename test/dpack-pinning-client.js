@@ -38,8 +38,8 @@ test.cb('can get account info', t => {
       if (err) throw err
       t.deepEqual(res.username, 'admin')
 
-      // can list dpacks
-      client.listDPacks((err, res) => {
+      // can list dwebs
+      client.listDWebs((err, res) => {
         if (err) throw err
         t.deepEqual(res.items, [])
 
@@ -55,20 +55,20 @@ test.cb('can get account info', t => {
   })
 })
 
-test.cb('add & remove dpacks', t => {
+test.cb('add & remove dwebs', t => {
   createClient(app.url, {username: 'admin', password: 'foobar'}, (err, client) => {
     if (err) throw err
     t.truthy(client.hasSession)
 
     // add dPack
-    client.addDPack({
+    client.addDWeb({
       url: 'dweb://868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f',
       name: 'mysite'
     }, (err) => {
       if (err) throw err
 
       // get dPack (verify)
-      client.getDPack('868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f', (err, res) => {
+      client.getDWeb('868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f', (err, res) => {
         if (err) throw err
         t.deepEqual(res, {
           url: 'dweb://868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f',
@@ -82,13 +82,13 @@ test.cb('add & remove dpacks', t => {
         })
 
         // update dPack
-        client.updateDPack('868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f', {
+        client.updateDWeb('868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f', {
           name: 'my-site'
         }, (err) => {
           if (err) throw err
 
           // get dPack (verify)
-          client.getDPack('868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f', (err, res) => {
+          client.getDWeb('868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f', (err, res) => {
             if (err) throw err
             t.deepEqual(res, {
               url: 'dweb://868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f',
@@ -101,8 +101,8 @@ test.cb('add & remove dpacks', t => {
               ]
             })
 
-            // list dpacks
-            client.listDPacks((err, res) => {
+            // list dwebs
+            client.listDWebs((err, res) => {
               if (err) throw err
               t.deepEqual(res.items, [
                 {
@@ -118,11 +118,11 @@ test.cb('add & remove dpacks', t => {
               ])
 
               // remove dPack
-              client.removeDPack('868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f', err => {
+              client.removeDWeb('868d6000f330f6967f06b3ee2a03811efc23591afe0d344cc7f8c5fb3b4ac91f', err => {
                 if (err) throw err
 
-                // list dpacks
-                client.listDPacks((err, res) => {
+                // list dwebs
+                client.listDWebs((err, res) => {
                   if (err) throw err
                   t.deepEqual(res.items, [])
 

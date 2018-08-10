@@ -73,19 +73,19 @@ test('do some activity', async t => {
   var json
 
   // add an vault as admin
-  json = {key: fakeDWebKey1, name: 'fakedpack1'}
+  json = {key: fakeDWebKey1, name: 'fakedweb1'}
   res = await app.req.post({uri: '/v2/vaults/add', json, auth})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   // add an vault as bob
-  json = {key: fakeDWebKey2, name: 'fakedpack2'}
+  json = {key: fakeDWebKey2, name: 'fakedweb2'}
   res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   // remove an vault as admin
   json = {key: fakeDWebKey1}
   res = await app.req.post({uri: '/v2/vaults/remove', json, auth})
-  t.is(res.statusCode, 200, '200 removed dPack')
+  t.is(res.statusCode, 200, '200 removed dWeb')
 })
 
 test('get global activity', async t => {
@@ -96,16 +96,16 @@ test('get global activity', async t => {
   t.is(res.statusCode, 200, '200 got activity')
   t.is(res.body.activity.length, 3)
   t.is(res.body.activity[0].action, 'add-vault')
-  t.is(res.body.activity[0].params.name, 'fakedpack1')
+  t.is(res.body.activity[0].params.name, 'fakedweb1')
   t.is(res.body.activity[0].params.key, fakeDWebKey1)
   t.is(res.body.activity[0].username, 'admin')
   t.is(res.body.activity[1].action, 'del-vault')
-  t.is(res.body.activity[1].params.name, 'fakedpack1')
+  t.is(res.body.activity[1].params.name, 'fakedweb1')
   t.is(res.body.activity[1].params.key, fakeDWebKey1)
   t.is(res.body.activity[1].username, 'admin')
   t.is(res.body.activity[2].username, 'bob')
   t.is(res.body.activity[2].action, 'add-vault')
-  t.is(res.body.activity[2].params.name, 'fakedpack2')
+  t.is(res.body.activity[2].params.name, 'fakedweb2')
   t.is(res.body.activity[2].params.key, fakeDWebKey2)
 
   // with offset
@@ -115,11 +115,11 @@ test('get global activity', async t => {
   t.is(res.body.activity.length, 2)
   t.is(res.body.activity[0].username, 'admin')
   t.is(res.body.activity[0].action, 'add-vault')
-  t.is(res.body.activity[0].params.name, 'fakedpack1')
+  t.is(res.body.activity[0].params.name, 'fakedweb1')
   t.is(res.body.activity[0].params.key, fakeDWebKey1)
   t.is(res.body.activity[1].username, 'bob')
   t.is(res.body.activity[1].action, 'add-vault')
-  t.is(res.body.activity[1].params.name, 'fakedpack2')
+  t.is(res.body.activity[1].params.name, 'fakedweb2')
   t.is(res.body.activity[1].params.key, fakeDWebKey2)
 })
 
@@ -131,11 +131,11 @@ test('get user activity', async t => {
   t.is(res.body.activity[0].username, 'admin')
   t.is(res.body.activity[0].action, 'del-vault')
   t.is(res.body.activity[0].params.key, fakeDWebKey1)
-  t.is(res.body.activity[0].params.name, 'fakedpack1')
+  t.is(res.body.activity[0].params.name, 'fakedweb1')
   t.is(res.body.activity[1].username, 'admin')
   t.is(res.body.activity[1].action, 'add-vault')
   t.is(res.body.activity[1].params.key, fakeDWebKey1)
-  t.is(res.body.activity[1].params.name, 'fakedpack1')
+  t.is(res.body.activity[1].params.name, 'fakedweb1')
   var start = res.body.activity[0].key
 
   res = await app.req.get({url: '/v2/users/bob?view=activity', json: true})
@@ -144,7 +144,7 @@ test('get user activity', async t => {
   t.is(res.body.activity[0].username, 'bob')
   t.is(res.body.activity[0].action, 'add-vault')
   t.is(res.body.activity[0].params.key, fakeDWebKey2)
-  t.is(res.body.activity[0].params.name, 'fakedpack2')
+  t.is(res.body.activity[0].params.name, 'fakedweb2')
 
   // with offset
   res = await app.req.get({url: '/v2/users/admin', qs: {view: 'activity', start}, json: true})
@@ -153,7 +153,7 @@ test('get user activity', async t => {
   t.is(res.body.activity[0].username, 'admin')
   t.is(res.body.activity[0].action, 'add-vault')
   t.is(res.body.activity[0].params.key, fakeDWebKey1)
-  t.is(res.body.activity[0].params.name, 'fakedpack1')
+  t.is(res.body.activity[0].params.name, 'fakedweb1')
 
   res = await app.req.get({url: '/v2/users/bob', qs: {view: 'activity', start}, json: true})
   t.is(res.statusCode, 200, '200 got activity')
@@ -161,7 +161,7 @@ test('get user activity', async t => {
   t.is(res.body.activity[0].username, 'bob')
   t.is(res.body.activity[0].action, 'add-vault')
   t.is(res.body.activity[0].params.key, fakeDWebKey2)
-  t.is(res.body.activity[0].params.name, 'fakedpack2')
+  t.is(res.body.activity[0].params.name, 'fakedweb2')
 })
 
 test('compute cohorts', async t => {

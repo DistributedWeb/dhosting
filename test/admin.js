@@ -2,10 +2,10 @@ var test = require('ava')
 var bytes = require('bytes')
 var path = require('path')
 var createTestServer = require('./lib/server.js')
-var { makeDPackFromFolder } = require('./lib/dweb.js')
+var { makeDWebFromFolder } = require('./lib/dweb.js')
 
 var app
-var sessionToken, auth, testDPackKey
+var sessionToken, auth, testDWebKey
 
 test.cb('start test server', t => {
   createTestServer(async (err, _app) => {
@@ -28,10 +28,10 @@ test.cb('start test server', t => {
   })
 })
 
-test.cb('share test-dpack', t => {
-  makeDPackFromFolder(path.join(__dirname, '/scaffold/testdpack1'), (err, d, dkey) => {
+test.cb('share test-dweb', t => {
+  makeDWebFromFolder(path.join(__dirname, '/scaffold/testdweb1'), (err, d, dkey) => {
     t.ifError(err)
-    testDPackKey = dkey
+    testDWebKey = dkey
     t.end()
   })
 })
@@ -384,24 +384,24 @@ test('remove an vault', async t => {
   // upload the test vault
   res = await app.req.post({
     uri: '/v2/vaults/add',
-    json: {key: testDPackKey},
+    json: {key: testDWebKey},
     auth
   })
 
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   // remove the vault
   res = await app.req.post({
-    uri: `/v2/admin/vaults/${testDPackKey}/remove`,
+    uri: `/v2/admin/vaults/${testDWebKey}/remove`,
     json: {
-      key: testDPackKey
+      key: testDWebKey
     },
     auth
   })
-  t.is(res.statusCode, 200, '200 removed dPack')
+  t.is(res.statusCode, 200, '200 removed dWeb')
 
   // check that the vault was removed
-  res = await app.req({uri: `/v2/vaults/item/${testDPackKey}`, qs: {view: 'status'}, auth})
+  res = await app.req({uri: `/v2/vaults/item/${testDWebKey}`, qs: {view: 'status'}, auth})
   t.is(res.statusCode, 404, '404 not found')
 })
 
@@ -410,7 +410,7 @@ test('create a report', async t => {
   var res = await app.req.post({
     uri: '/v2/reports/add/',
     json: {
-      vaultKey: testDPackKey,
+      vaultKey: testDWebKey,
       vaultOwner: 'admin',
       reason: 'inappropriate'
     },

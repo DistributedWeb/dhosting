@@ -1,11 +1,11 @@
 var test = require('ava')
 var path = require('path')
 var createTestServer = require('./lib/server.js')
-var { makeDPackFromFolder } = require('./lib/dweb.js')
+var { makeDWebFromFolder } = require('./lib/dweb.js')
 
 var app
 var sessionToken, auth, authUser
-var testDPack, testDPackKey
+var testDWeb, testDWebKey
 
 test.cb('start test server', t => {
   createTestServer(async (err, _app) => {
@@ -69,11 +69,11 @@ test('register and login bob', async t => {
   authUser = { bearer: sessionToken }
 })
 
-test.cb('share test-dpack 1', t => {
-  makeDPackFromFolder(path.join(__dirname, '/scaffold/testdpack1'), (err, d, dkey) => {
+test.cb('share test-dweb 1', t => {
+  makeDWebFromFolder(path.join(__dirname, '/scaffold/testdweb1'), (err, d, dkey) => {
     t.ifError(err)
-    testDPack = d
-    testDPackKey = dkey
+    testDWeb = d
+    testDWebKey = dkey
     t.end()
   })
 })
@@ -85,9 +85,9 @@ test('user disk usage is zero', async t => {
 })
 
 test('add vault', async t => {
-  var json = {key: testDPackKey}
+  var json = {key: testDWebKey}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 })
 
 test.cb('check vault status and wait till synced', t => {
@@ -97,7 +97,7 @@ test.cb('check vault status and wait till synced', t => {
 
   checkStatus()
   async function checkStatus () {
-    var res = await app.req({uri: `/v2/vaults/item/${testDPackKey}`, qs: {view: 'status'}, json: true, auth})
+    var res = await app.req({uri: `/v2/vaults/item/${testDWebKey}`, qs: {view: 'status'}, json: true, auth})
     var progress = res.body && res.body.progress ? res.body.progress : 0
     if (progress === 1) {
       clearTimeout(to)
@@ -126,7 +126,7 @@ test('user disk usage now exceeds the disk quota', async t => {
   t.truthy(res.body.diskUsage > res.body.diskQuota, 'disk quota is exceeded')
 
   // check vault record
-  res = await app.req.get({url: `/v2/admin/vaults/${testDPackKey}`, json: true, auth})
+  res = await app.req.get({url: `/v2/admin/vaults/${testDWebKey}`, json: true, auth})
   t.is(res.statusCode, 200, '200 got vault data')
   t.truthy(res.body.diskUsage > 0, 'response has disk usage')
 })
@@ -140,7 +140,7 @@ test('add vault now fails', async t => {
 
 test.cb('stop test server', t => {
   app.close(() => {
-    testDPack.close(() => {
+    testDWeb.close(() => {
       t.pass('closed')
       t.end()
     })
@@ -212,30 +212,30 @@ test('register and login bob', async t => {
 test('enforce name vaults limit', async t => {
   var json = {key: '0'.repeat(64), name: 'a'}
   var res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   json = {key: '1'.repeat(64), name: 'b'}
   res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   json = {key: '2'.repeat(64), name: 'c'}
   res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   // dont allow
   json = {key: '3'.repeat(64), name: 'd'}
   res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
-  t.is(res.statusCode, 422, '422 too many named dpacks')
+  t.is(res.statusCode, 422, '422 too many named dwebs')
 
   // allow with no name
   json = {key: '3'.repeat(64)}
   res = await app.req.post({uri: '/v2/vaults/add', json, auth: authUser})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 
   // dont allow rename
   json = {name: 'd'}
   res = await app.req.post({uri: '/v2/vaults/item/' + ('3'.repeat(64)), json, auth: authUser})
-  t.is(res.statusCode, 422, '422 too many named dpacks')
+  t.is(res.statusCode, 422, '422 too many named dwebs')
 
   // bump their limit
   res = await app.req.post({
@@ -248,12 +248,12 @@ test('enforce name vaults limit', async t => {
   // now all rename
   json = {name: 'd'}
   res = await app.req.post({uri: '/v2/vaults/item/' + ('3'.repeat(64)), json, auth: authUser})
-  t.is(res.statusCode, 200, '200 added dPack')
+  t.is(res.statusCode, 200, '200 added dWeb')
 })
 
 test.cb('stop test server', t => {
   app.close(() => {
-    testDPack.close(() => {
+    testDWeb.close(() => {
       t.pass('closed')
       t.end()
     })

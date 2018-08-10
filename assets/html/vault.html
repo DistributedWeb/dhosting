@@ -175,7 +175,7 @@
           <% } %>
         </div>
 
-        <% if (sessionUser && sessionUser.scopes.includes('admin:dpacks')) { %>
+        <% if (sessionUser && sessionUser.scopes.includes('admin:dwebs')) { %>
           <div class="card admin-controls">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <h2>admin</h2>
@@ -214,7 +214,7 @@
     <% if (isOwner) { %>
       <script src="/assets/js/upload-progress.js"></script>
     <% } %>
-    <% if (sessionUser && sessionUser.scopes.includes('admin:dpacks')) { %>
+    <% if (sessionUser && sessionUser.scopes.includes('admin:dwebs')) { %>
       <script src="/assets/js/vault-admin.js"></script>
     <% } %>
   </body>
